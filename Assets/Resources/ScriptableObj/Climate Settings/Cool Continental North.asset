@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d64c1179685814a9d0ef1d52d88570, type: 3}
+  m_Name: Cool Continental North
+  m_EditorClassIdentifier: 
+  gardenHemisphere: 0
+  lengthOfDayRange: {x: 9, y: 15}
+  monthlyHighTempRange: {x: 20, y: 80}
+  monthlyLowTempRange: {x: -20, y: 60}
+  monthlyPrecipitationRange: {x: 0, y: 12}
+  monthlyHumidityRange: {x: 0.01, y: 0.1}
