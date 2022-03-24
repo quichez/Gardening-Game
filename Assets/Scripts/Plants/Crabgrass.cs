@@ -21,13 +21,28 @@ public class Crabgrass : Plant
         {
             TakeDamage(1);
         }
-        if(Weather.Instance.currentTemperature < -10.0f)
+        
+    }
+
+    public override string SubTypeToString() => "Weed";
+
+    public override string StageToString()
+    {
+        return "Alive";
+    }
+
+    public override void CheckWeatherConditions()
+    {
+        if (Weather.Instance.currentTemperature < -10.0f)
         {
             TakeDamage(10);
         }
     }
 
-    public override string SubTypeToString() => "Weed";
+    public override void DailyEvent()
+    {
+        
+    }
 
     public Crabgrass() { }
 }

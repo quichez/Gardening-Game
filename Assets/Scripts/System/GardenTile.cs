@@ -35,7 +35,7 @@ public class GardenTile : MonoBehaviour
 
     [Tooltip("Nutrients")]
     #region Expand Nutrients
-    public float nitrogen { get; private set; }
+    public float nitrogen { get; private set; } = 0.1f;
     public float phosphorus { get; private set; }
     public float potassium { get; private set; }
 
@@ -101,7 +101,9 @@ public class GardenTile : MonoBehaviour
     private void DailyPlantCheck()
     {
         if (plant == null) return;
+        plant.DailyEvent();
         plant.CheckSoilConditions(this);
+        plant.CheckWeatherConditions();
         if (plant.IsDead) _plantSprite.color = Color.green/2.0f + (Color.blue + Color.red)/3f;
         
     }
