@@ -3,139 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 using GardeningGame.Plants;
 
-public class TestPlant : Plant, IGerminating, IGrowing, IFlowering, IWilting, ISeeding
+public class TestPlant : Annual
 {
-    public override string plantName => "Test";
+    public TestPlant(GardenTile gardenTile) : base(gardenTile) { }
 
-    public override string description => "Test";
+    public override string plantName => "Test Plant";
+
+    public override string description => "New Test Plant";
 
     public override Sprite sprite => Resources.Load<Sprite>("Sprites/TestPlants/TestPlant");
 
-    public float minimumTemperatureToGerminate => 0.0f;
+    public override int daysToGerminate => 7;
 
-    public int daysAtMinTempRequiredToGerminate => 5;
-    public int daysGerminating { get; private set; } = 0;
-    public bool IsGerminated => daysGerminating >= daysAtMinTempRequiredToGerminate;
+    public override float minimumTemperatureToGerminate => 0.0f;
 
-    public int daysToFullSize => 1;
-    public int daysGrowing { get; private set; } = 0;
-    public bool IsFullSize => daysGrowing >= daysToFullSize;
+    public override float moistureRequiredForGermination => 0.1f;
 
-    public FlowerStage flowerStage { get; private set; } = FlowerStage.Growing;
-    public int daysToBlossom => 1;
-    public int daysBudding { get; private set; } = 0;
-    public bool IsBlossomed => daysBudding >= daysToBlossom;
+    public override int daysToFirstLeaves => 14;
 
-    public int daysToSeed => 1;
-    public int daysSettingSeed { get; private set; } = 0;
-    public bool IsSeedHasSet => daysSettingSeed >= daysToSeed;
-
-    public int daysToWilt => 1;
-    public int daysWilting { get; private set; } = 0;
-    public bool IsWilted => daysWilting >= daysToWilt;   
+    public override int daysToMaturity => 60;
 
     public override void CheckSoilConditions(GardenTile gardenTile)
     {
-        if(gardenTile.nitrogen < 0.1f)
+        if (HasFirstLeaves)
         {
-            TakeDamage(1);
+            if (gardenTile.nitrogen < 0.1) TakeDamage(1);
+            if (gardenTile.phosphorus < 0.1) TakeDamage(1);
+            if (gardenTile.potassium < 0.1) TakeDamage(2);
+            if (gardenTile.soilMoisture > 0.8f || gardenTile.soilMoisture < 0.0f) TakeDamage(1);
         }
     }
 
     public override void CheckWeatherConditions()
     {
-        if (Weather.Instance.currentTemperature < 0.0f)
+        if (HasFirstLeaves)
         {
-            TakeDamage(1);
+            if (Weather.Instance.currentTemperature <= 29.0f)
+            {
+                int dmg = 30 - (int) Weather.Instance.currentTemperature;
+                dmg = Mathf.Min(dmg, 20);
+            }
         }
     }
 
     public override void DailyEvent()
     {
-        if (!IsGerminated)
+        if(!(this as IGrowFromSeed).IsGerminated)
         {
-            if(Weather.Instance.currentTemperature >= minimumTemperatureToGerminate)
-            {
-                daysGerminating++;
-            }
+            CountNewDayTowardsGermination();
         }
-        else
+        if(!(this as IGrowFromSeed).HasFirstLeaves)
         {
-            if (!IsFullSize)
-            {
-                daysGrowing++;
-            }
-            else
-            {
-                if (!IsBlossomed)
-                {
-                    flowerStage = FlowerStage.Budding;
-                    daysBudding++;
-                }
-                else
-                {
-                    if (!IsSeedHasSet)
-                    {
-                        flowerStage = FlowerStage.Seeding;
-                        daysSettingSeed++;
-                    }
-                    else
-                    {
-                        if (!IsWilted)
-                        {
-                            flowerStage = FlowerStage.Wilting;
-                            daysWilting++;
-                        }
-                        else
-                        {
-                            TakeDamage(health);
-                        }
-                    }
-                }
-            }
+            CountNewDayTowardsFirstLeaves();
         }
-    }
-
-    public override string StageToString()
-    {
-        if (!IsGerminated) return "Germinating";
-        if (IsDead) return "Dead";
-        else return flowerStage.ToString();
+        base.DailyEvent();
     }
 
     public override string SubTypeToString()
     {
-        return "Test Subtype";
+        throw new System.NotImplementedException();
     }
-
-    
-}
-
-public interface IGerminating
-{
-    float minimumTemperatureToGerminate { get; }
-    int daysAtMinTempRequiredToGerminate { get; }
-    int daysGerminating { get; }
-    bool IsGerminated { get; }
-}
-
-public interface IGrowing
-{
-    int daysToFullSize { get; }
-    int daysGrowing { get; }
-    bool IsFullSize { get; }
-}
-
-public interface IWilting
-{
-    int daysToWilt { get; }
-    int daysWilting { get; }
-    bool IsWilted { get; }
-}
-
-public interface ISeeding
-{
-    int daysToSeed { get; }
-    int daysSettingSeed { get; }
-    bool IsSeedHasSet { get; }
 }

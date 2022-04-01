@@ -8,20 +8,17 @@ namespace GardeningGame
 {
     namespace Plants
     {
-        public enum FlowerStage {Growing, Budding, Flowering, Seeding, Wilting}
-        public enum PerennialStage { Awake, Dormant}
-        public enum AnnualStage { Alive, Dead}
-
-
         public abstract class Plant : IDailyEvent
         {
             public abstract string plantName { get; }
             public abstract string description { get; }
+            public int age { get; private set; }
             public abstract Sprite sprite { get; }            
             public int health { get; private set; } = 100;
             public bool IsDead => health == 0;
+            public readonly GardenTile tile;
 
-            public Plant() { }            
+            public Plant(GardenTile gardenTile) { tile = gardenTile; }            
 
             public void TakeDamage(int amt = 1)
             {
@@ -31,13 +28,19 @@ namespace GardeningGame
             public abstract void CheckSoilConditions(GardenTile gardenTile);
 
             public abstract void CheckWeatherConditions();
+
             public override string ToString() => plantName;
 
             public abstract string SubTypeToString();
 
-            public abstract string StageToString();
+            public virtual void DailyEvent()
+            {
+                CheckSoilConditions(tile);
+                CheckWeatherConditions();
+                age++;
+            }
 
-            public abstract void DailyEvent();
+            public virtual string StageToString() => "base";
         }
 
         public static class PlantFactory
@@ -88,47 +91,94 @@ namespace GardeningGame
             }
         }
 
-        public abstract class Flower : Plant
+        public abstract class Annual : Plant, IGrowFromSeed
         {
-            public override string SubTypeToString() => "Flower";
-            public FlowerStage flowerStage { get; protected set; } = FlowerStage.Growing;
+            public Annual(GardenTile gardenTile) : base(gardenTile) {}
 
-            public int[] stageLengths = new int[7];
+            public abstract int daysToGerminate { get; }
+            public abstract float minimumTemperatureToGerminate { get; }
+            public abstract float moistureRequiredForGermination { get; }
+            public int daysAtGerminationConditions { get; private set; }
+
+
+            public abstract int daysToFirstLeaves { get; }
+            public int daysAsSeedling { get; private set; }
+            
+            public abstract int daysToMaturity { get; }
+            public int daysOfVegetativeGrowth { get; private set; }
+
+            public bool IsGerminated => daysAtGerminationConditions >= daysToGerminate;
+            public bool HasFirstLeaves => daysAsSeedling >= daysToFirstLeaves;
+            public bool IsMature => daysOfVegetativeGrowth >= daysToMaturity;
+
+            public virtual void CountNewDayTowardsGermination()
+            {
+                if (IsGerminated) return;
+                if (Weather.Instance.currentTemperature >= minimumTemperatureToGerminate && Mathf.Abs(tile.soilMoisture - moistureRequiredForGermination) < 0.1f)
+                {
+                    daysAtGerminationConditions++;
+                }
+            }
+
+            public virtual void CountNewDayTowardsFirstLeaves()
+            {
+                if (HasFirstLeaves) return;
+            }
 
             public override string StageToString()
             {
-                if(this is IPerennial perennial)
-                {
-                    if(perennial.perennialStage == PerennialStage.Dormant)
-                    {
-                        return "Dormant";
-                    }
-                    else
-                    {
-                        return flowerStage.ToString();
-                    }
-                }
-                else
-                {
-                    return flowerStage.ToString();
-                }
+                return IsGerminated ? HasFirstLeaves ? IsMature ? "Mature" : "Growing" : "Seedling" : "Germinating";
             }
         }
 
-        public interface IFlowering
+        public interface IFlower
         {
-            FlowerStage flowerStage { get; }
-            int daysToBlossom { get; }
-            int daysBudding { get; }
-            bool IsBlossomed { get; }
+
         }
 
-        public interface IPerennial
+        public interface IFruit : IFlower
         {
-            PerennialStage perennialStage { get; } 
-            int age { get;}
-            int lifeExpectancy { get; }
-            float awakeTemperature { get; }
+
+        }
+
+        public interface IHarvestable
+        {
+
+        }
+
+        public interface IHarvestPlant : IHarvestable
+        {
+
+        }
+
+        public interface IHarvestFruit<T> : IHarvestable where T: IFruit
+        {
+
+        }
+
+        public interface IHarvestSeed<T> : IHarvestable where T : IGrowFromSeed
+        {
+
+        }
+
+        public interface ISpreadToSurroundingTile
+        {
+
+        }
+
+        public interface IPollinate
+        {
+
+        }
+
+        public interface ISelfPollinate : IPollinate
+        {
+
+        }
+
+        public interface IOtherPollinate : IPollinate
+        {
+
         }
     }
 

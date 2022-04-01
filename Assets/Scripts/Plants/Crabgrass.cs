@@ -26,11 +26,6 @@ public class Crabgrass : Plant
 
     public override string SubTypeToString() => "Weed";
 
-    public override string StageToString()
-    {
-        return "Alive";
-    }
-
     public override void CheckWeatherConditions()
     {
         if (Weather.Instance.currentTemperature < -10.0f)
@@ -44,5 +39,5 @@ public class Crabgrass : Plant
         
     }
 
-    public Crabgrass() { }
+    public Crabgrass(GardenTile gardenTile) : base(gardenTile) { }
 }
