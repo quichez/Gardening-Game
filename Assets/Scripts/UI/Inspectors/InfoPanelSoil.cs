@@ -4,13 +4,21 @@ using UnityEngine;
 using GardeningGame.Inspectors;
 using TMPro;
 
-public class InspectorSoil : MonoBehaviour
+public class InfoPanelSoil : Singleton<InfoPanelSoil>
 {
     [SerializeField] TextMeshProUGUI _selectedSoilTileText;
     [SerializeField] TextMeshProUGUI _soilPopulatedText;
     [SerializeField] TextMeshProUGUI _soilMoistureText;
     [SerializeField] TextMeshProUGUI _soilAgeText;
-   
+
+    private void OnEnable()
+    {
+        foreach (Transform transform in transform)
+        {
+            transform.gameObject.SetActive(true);
+        }
+    }
+
     private void Update()
     {
         GardenTile curr = Garden.Instance.selectedGardenTile;

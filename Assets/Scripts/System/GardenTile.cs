@@ -12,6 +12,7 @@ public class GardenTile : MonoBehaviour
     public string nameOfPlant;
     public bool IsSoilPlanted => plant != null;
 
+    #region Soil Quality
     [Header("Soil Quality")]
     [Tooltip("Current soil moisture.")]
     [Range(0.0f,2.0f)] public float soilMoisture = 0.0f;
@@ -27,14 +28,14 @@ public class GardenTile : MonoBehaviour
 
     [Tooltip("Some plants like more alkaline soils, others more acidic. Measured in pH")]
     [SerializeField] float soilAcidity;
-        
-        
+   
     // These depend on GardenSettings
     float soilMoistureMinimum => -1.0f + 1 * Weather.Instance.currentHumidity;
     float soilMoistureMaximum = 2.0f;
+    #endregion
 
-    [Tooltip("Nutrients")]
     #region Expand Nutrients
+    [Tooltip("Nutrients")]
     public float nitrogen { get; private set; } = 0.1f;
     public float phosphorus { get; private set; }
     public float potassium { get; private set; }
@@ -110,7 +111,7 @@ public class GardenTile : MonoBehaviour
 
     private void OnMouseUpAsButton()
     {
-        Garden.Instance.SetSelectedGardenTile(this);
+        Garden.Instance.SetSelectedGardenTile(this);        
     }    
 }
 

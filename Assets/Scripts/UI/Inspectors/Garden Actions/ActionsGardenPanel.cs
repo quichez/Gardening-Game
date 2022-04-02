@@ -2,19 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionsGardenPanel : Singleton<ActionsGardenPanel>
+public class ActionsGardenPanel : Inspector<ActionsGardenPanel>
 {
     [SerializeField] ActionsTilePanel _actionsTilePanel;
     [SerializeField] ActionsPlantPanel _actionsPlantPanel;
 
-    public void OnEnable()
+    public override void ActivateInspectors()
     {
-        _actionsTilePanel.gameObject.SetActive(true);
-        _actionsPlantPanel.gameObject.SetActive(Garden.Instance.selectedGardenTile.IsSoilPlanted);
-    }   
-
-    public void TogglePlantSelectionPanel()
-    {
-        ActionsPlantSelectionPanel.SetActive();
+        _actionsTilePanel.gameObject.SetActive(!Garden.Instance.IsSelectedTilePlanted && Garden.Instance.IsSelectedTileValid);
+        _actionsPlantPanel.gameObject.SetActive(Garden.Instance.IsSelectedTilePlanted);
     }
 }

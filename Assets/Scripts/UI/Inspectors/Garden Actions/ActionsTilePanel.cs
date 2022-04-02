@@ -7,17 +7,17 @@ public class ActionsTilePanel : Singleton<ActionsTilePanel>
     [SerializeField] ActionsTilePanelButton _buttonPrefab;
     private void OnEnable()
     {
-        if (Garden.Instance.selectedGardenTile.IsSoilPlanted)
+        foreach (Transform transform in transform)
+        {
+            Destroy(transform.gameObject);
+        }
+
+        if (Garden.Instance.IsSelectedTilePlanted)
         {
 
         }
         else
         {
-            foreach (Transform transform in transform)
-            {
-                Destroy(transform.gameObject);
-            }
-
             ActionsTilePanelButton plantButton = Instantiate(_buttonPrefab, transform);
             plantButton.onClick.AddListener(() => ActionsPlantSelectionPanel.SetActive(!ActionsPlantSelectionPanel.Instance.gameObject.activeSelf));
         }

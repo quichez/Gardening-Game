@@ -61,6 +61,6 @@ public class TestPlant : Annual
 
     public override string SubTypeToString()
     {
-        throw new System.NotImplementedException();
+        return "testplant";
     }
 }

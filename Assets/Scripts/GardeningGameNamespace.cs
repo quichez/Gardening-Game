@@ -219,15 +219,22 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public static void SetActive(bool active = true) => Instance.gameObject.SetActive(active);
+    public static void SetActive(bool active = true) => Instance.gameObject.SetActive(active); 
 
-    public static void RefreshPanel()
+    public static void RefreshPanelStatic()
     {
-        Instance.gameObject.SetActive(false);
-        Instance.gameObject.SetActive(true);
+        foreach (Transform transform in Instance.transform)
+        {
+            transform.gameObject.SetActive(false);
+            transform.gameObject.SetActive(true);
+        }
     }
 }
 
+public abstract class Inspector<T> : Singleton<T> where T:MonoBehaviour
+{
+    public abstract void ActivateInspectors();
+}
 public abstract class SingletonPersistent<T> : Singleton<T> where T : MonoBehaviour
 {
     protected override void Awake()
