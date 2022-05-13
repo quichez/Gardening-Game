@@ -9,11 +9,13 @@ public class ActionPanelPlantSelection : Singleton<ActionPanelPlantSelection>
 
     private void OnEnable()
     {
-        foreach (Plant item in PlantFactory.GetPlantTypes())
+        /*foreach (Plant item in PlantFactory.GetPlantTypes())
         {
             ActionPanelPlantSelectionButton clone = Instantiate(_buttonPrefab, transform);
             clone.InitializePlantSelectionButton(item);
-        }
+        }*/
+        ActionPanelPlantSelectionButton clone = Instantiate(_buttonPrefab, transform);
+        clone.InitializePlantSelectionButton(new Marigold());
     }
 
     private void OnDisable()
