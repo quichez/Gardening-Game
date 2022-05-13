@@ -9,11 +9,12 @@ public class Garden : Singleton<Garden>
     public bool IsSelectedTileValid => selectedGardenTile != null;
     public void SetSelectedGardenTile(GardenTile gardenTile)
     {
-        Debug.Log("hello");
         selectedGardenTile = gardenTile;
-        Debug.Log(InspectorGarden.Instance);
         InspectorGarden.Instance.ActivateInspectors();
         ActionsGardenPanel.Instance.ActivateInspectors();
+        ActionsGardenPanel.Instance.SetActionsTilePanelActive(false);
+        
+        if(gardenTile != null) ActionsGardenPanel.Instance.SetActionsTilePanelActive(true);
     }
     
     

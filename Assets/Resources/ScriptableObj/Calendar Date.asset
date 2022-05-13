@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bb542171fa9d44a9c17f1429562fab, type: 3}
   m_Name: Calendar Date
   m_EditorClassIdentifier: 
-  day: 1
+  day: 3
   month: 1
-  year: 1
+  year: 15
+  IsTestMode: 0

@@ -17,9 +17,10 @@ public class Calendar : Singleton<Calendar>
     {
         dayTimer += Time.deltaTime;        
         if(dayTimer >= (float)dayLengthInSeconds/ticksPerDay)
-        {
+        {            
             if (gameTickCounter == 0)
             {
+                //Debug.Log(gameTickCounter);
                 date.AdvanceCalendar();
             }
 

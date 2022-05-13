@@ -13,4 +13,9 @@ public class InspectorGarden : Inspector<InspectorGarden>
         _inspectorSoil.gameObject.SetActive(Garden.Instance.selectedGardenTile);
         _inspectorPlant.gameObject.SetActive(Garden.Instance.IsSelectedTilePlanted);
     }
+
+    public void SetActiveInspectorPlant(bool active = true)
+    {
+        _inspectorPlant.gameObject.SetActive(active);
+    }
 }

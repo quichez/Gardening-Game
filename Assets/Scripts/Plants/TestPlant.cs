@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GardeningGame.Plants;
+using UnityEngine.U2D;
 
 public class TestPlant : Annual
 {
+    public TestPlant() { }
     public TestPlant(GardenTile gardenTile) : base(gardenTile) { }
 
     public override string plantName => "Test Plant";
 
     public override string description => "New Test Plant";
-
-    public override Sprite sprite => Resources.Load<Sprite>("Sprites/TestPlants/TestPlant");
 
     public override int daysToGerminate => 7;
 
@@ -19,9 +19,13 @@ public class TestPlant : Annual
 
     public override float moistureRequiredForGermination => 0.1f;
 
+    public override float moistureToleranceForGermination => 1.0f;
+
     public override int daysToFirstLeaves => 14;
 
     public override int daysToMaturity => 60;
+
+    public override SpriteAtlas atlas => throw new System.NotImplementedException();
 
     public override void CheckSoilConditions(GardenTile gardenTile)
     {
@@ -46,17 +50,9 @@ public class TestPlant : Annual
         }
     }
 
-    public override void DailyEvent()
+    public override Sprite GetSprite()
     {
-        if(!(this as IGrowFromSeed).IsGerminated)
-        {
-            CountNewDayTowardsGermination();
-        }
-        if(!(this as IGrowFromSeed).HasFirstLeaves)
-        {
-            CountNewDayTowardsFirstLeaves();
-        }
-        base.DailyEvent();
+        throw new System.NotImplementedException();
     }
 
     public override string SubTypeToString()

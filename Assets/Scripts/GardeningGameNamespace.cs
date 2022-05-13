@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.U2D;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -8,16 +9,22 @@ namespace GardeningGame
 {
     namespace Plants
     {
+        
         public abstract class Plant : IDailyEvent
         {
             public abstract string plantName { get; }
             public abstract string description { get; }
             public int age { get; private set; }
-            public abstract Sprite sprite { get; }            
+            public Sprite sprite { get; private set; }
+            public abstract SpriteAtlas atlas { get; }
             public int health { get; private set; } = 100;
             public bool IsDead => health == 0;
             public readonly GardenTile tile;
 
+            public Plant() 
+            {
+                tile = Garden.Instance.selectedGardenTile;
+            }
             public Plant(GardenTile gardenTile) { tile = gardenTile; }            
 
             public void TakeDamage(int amt = 1)
@@ -33,11 +40,14 @@ namespace GardeningGame
 
             public abstract string SubTypeToString();
 
+            public abstract Sprite GetSprite();
+
             public virtual void DailyEvent()
             {
                 CheckSoilConditions(tile);
                 CheckWeatherConditions();
-                age++;
+                age++;                
+                //Debug.Log(sprite.name);
             }
 
             public virtual string StageToString() => "base";
@@ -93,11 +103,13 @@ namespace GardeningGame
 
         public abstract class Annual : Plant, IGrowFromSeed
         {
+            public Annual() { }
             public Annual(GardenTile gardenTile) : base(gardenTile) {}
 
             public abstract int daysToGerminate { get; }
             public abstract float minimumTemperatureToGerminate { get; }
             public abstract float moistureRequiredForGermination { get; }
+            public abstract float moistureToleranceForGermination { get; }
             public int daysAtGerminationConditions { get; private set; }
 
 
@@ -111,23 +123,48 @@ namespace GardeningGame
             public bool HasFirstLeaves => daysAsSeedling >= daysToFirstLeaves;
             public bool IsMature => daysOfVegetativeGrowth >= daysToMaturity;
 
-            public virtual void CountNewDayTowardsGermination()
+            public override void DailyEvent()
             {
-                if (IsGerminated) return;
-                if (Weather.Instance.currentTemperature >= minimumTemperatureToGerminate && Mathf.Abs(tile.soilMoisture - moistureRequiredForGermination) < 0.1f)
+                base.DailyEvent();
+                
+                if (!CountNewDayTowardsGermination())
                 {
-                    daysAtGerminationConditions++;
+                    if (!CountNewDayTowardsFirstLeaves())
+                    {
+                        CountNewDayTowardsMaturity();
+                    }
                 }
             }
 
-            public virtual void CountNewDayTowardsFirstLeaves()
+            public virtual bool CountNewDayTowardsGermination()
             {
-                if (HasFirstLeaves) return;
+                if (IsGerminated || IsDead) return false;
+                Debug.Log(Weather.Instance.currentTemperature >= minimumTemperatureToGerminate && Mathf.Abs(tile.soilMoisture - moistureRequiredForGermination) < 0.3f);
+                if (Weather.Instance.currentTemperature >= minimumTemperatureToGerminate && Mathf.Abs(tile.soilMoisture - moistureRequiredForGermination) < 0.3f)
+                {
+                    daysAtGerminationConditions++;
+                }
+                Debug.Log(daysAtGerminationConditions);
+                return true;
+            }
+
+            public virtual bool CountNewDayTowardsFirstLeaves()
+            {
+                if (!IsGerminated  || HasFirstLeaves || IsDead) return false;
+                daysAsSeedling++;
+                return true;
+            }
+
+            public virtual bool CountNewDayTowardsMaturity()
+            {
+                if (!HasFirstLeaves || IsMature || IsDead) return false;
+                daysOfVegetativeGrowth++;
+                return true;
             }
 
             public override string StageToString()
             {
-                return IsGerminated ? HasFirstLeaves ? IsMature ? "Mature" : "Growing" : "Seedling" : "Germinating";
+                return IsDead ? "Dead" : IsGerminated ? HasFirstLeaves ? IsMature ? "Mature" : "Growing" : "Seedling" : "Germinating";
             }
         }
 
@@ -234,6 +271,8 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 public abstract class Inspector<T> : Singleton<T> where T:MonoBehaviour
 {
     public abstract void ActivateInspectors();
+
+    public void TogglePanel(MonoBehaviour panel) => panel.gameObject.SetActive(!panel.gameObject.activeSelf);
 }
 public abstract class SingletonPersistent<T> : Singleton<T> where T : MonoBehaviour
 {

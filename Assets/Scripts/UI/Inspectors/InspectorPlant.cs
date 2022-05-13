@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using GardeningGame.Plants;
 
-public class InspectorPlant : MonoBehaviour
+public class InspectorPlant : Singleton<InspectorPlant>
 {
     [SerializeField] TextMeshProUGUI _plantName;
     [SerializeField] TextMeshProUGUI _plantTypeDescription;

@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GardeningGame.Plants;
+using UnityEngine.U2D;
+
 public class TestPerennialPlant : Plant
 {
     public override string plantName => "Test Perennial";
 
     public override string description => "Test Perennial Plant";
 
-    public override Sprite sprite => Resources.Load<Sprite>("Sprites/TestPlants/TestPerennial");
+    public override SpriteAtlas atlas => throw new System.NotImplementedException();
 
+    public TestPerennialPlant() { }
     public TestPerennialPlant(GardenTile gardenTile) : base(gardenTile) { }
 
     public override void CheckSoilConditions(GardenTile gardenTile)
@@ -40,5 +43,10 @@ public class TestPerennialPlant : Plant
     public override string SubTypeToString()
     {
         return "this is not useful I believe";
+    }
+
+    public override Sprite GetSprite()
+    {
+        throw new System.NotImplementedException();
     }
 }

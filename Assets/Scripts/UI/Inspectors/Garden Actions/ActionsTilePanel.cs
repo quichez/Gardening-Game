@@ -1,25 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class ActionsTilePanel : Singleton<ActionsTilePanel>
 {
-    [SerializeField] ActionsTilePanelButton _buttonPrefab;
+
+    [SerializeField] Button _plantButton, _waterButton, _tillButton, _clearButton;
+
     private void OnEnable()
     {
-        foreach (Transform transform in transform)
-        {
-            Destroy(transform.gameObject);
-        }
+        _plantButton.interactable = !Garden.Instance.selectedGardenTile.IsSoilPlanted;
+        _clearButton.interactable = Garden.Instance.selectedGardenTile.IsSoilPlanted;
+    }
 
-        if (Garden.Instance.IsSelectedTilePlanted)
-        {
+    public void OpenPlantMenu()
+    {
+        ActionsGardenPanel.Instance.ToggleActionPanelPlantSelection();
+    }
 
-        }
-        else
-        {
-            ActionsTilePanelButton plantButton = Instantiate(_buttonPrefab, transform);
-            plantButton.onClick.AddListener(() => ActionsPlantSelectionPanel.SetActive(!ActionsPlantSelectionPanel.Instance.gameObject.activeSelf));
-        }
+    public void WaterSelectedTile()
+    {
+        Garden.Instance.selectedGardenTile.WaterGardenTile();
+    }
+
+    public void TillSelectedTile()
+    {
+        Garden.Instance.selectedGardenTile.TillSoil();
+    }
+
+    public void ClearSelectedTile()
+    {
+        Garden.Instance.selectedGardenTile.ClearGardenTile();
     }
 }

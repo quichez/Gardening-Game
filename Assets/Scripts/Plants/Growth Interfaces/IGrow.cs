@@ -12,12 +12,12 @@ namespace GardeningGame.Plants
         float moistureRequiredForGermination { get; }
         int daysAtGerminationConditions { get; }
         bool IsGerminated => daysToGerminate <= daysAtGerminationConditions;
-        void CountNewDayTowardsGermination();
+        bool CountNewDayTowardsGermination();
 
         int daysToFirstLeaves { get; }
         int daysAsSeedling { get; }
         bool HasFirstLeaves => daysAsSeedling >= daysToFirstLeaves;
-        void CountNewDayTowardsFirstLeaves();
+        bool CountNewDayTowardsFirstLeaves();
 
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GardeningGame.Plants;
+using UnityEngine.U2D;
 
 public class Rose : Plant
 {    public int lifeExpectancy => 365 * 50;
@@ -12,8 +13,9 @@ public class Rose : Plant
 
     public override string description => "The prickly flower";
 
-    public override Sprite sprite => Resources.Load<Sprite>("Sprites/TestPlants/Weed");
+    public override SpriteAtlas atlas => throw new System.NotImplementedException();
 
+    public Rose() { }
     public Rose(GardenTile gardenTile) : base(gardenTile) { }
     public override void CheckSoilConditions(GardenTile gardenTile)
     {
@@ -31,6 +33,11 @@ public class Rose : Plant
     }
 
     public override string SubTypeToString()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override Sprite GetSprite()
     {
         throw new System.NotImplementedException();
     }
