@@ -6,8 +6,8 @@ using GardeningGame.Plants;
 
 public class GardenTile : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer _moistureMask;
-    [SerializeField] SpriteRenderer _plantSprite;
+    [SerializeField] SpriteRenderer _moistureMask, _plantSprite, _selectMask;
+   
     public Plant plant;
     public string nameOfPlant;
     public bool IsSoilPlanted => plant != null;
@@ -143,7 +143,9 @@ public class GardenTile : MonoBehaviour
     private void OnMouseUpAsButton()
     {
         Garden.Instance.SetSelectedGardenTile(this);        
-    }    
+    }
+
+    public void SetSelectMaskActive(bool active = true) => _selectMask.gameObject.SetActive(active);
 }
 
 

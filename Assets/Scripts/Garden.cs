@@ -9,7 +9,10 @@ public class Garden : Singleton<Garden>
     public bool IsSelectedTileValid => selectedGardenTile != null;
     public void SetSelectedGardenTile(GardenTile gardenTile)
     {
+        selectedGardenTile?.SetSelectMaskActive(false);
         selectedGardenTile = gardenTile;
+        selectedGardenTile?.SetSelectMaskActive(true);
+
         InspectorGarden.Instance.ActivateInspectors();
         ActionsGardenPanel.Instance.ActivateInspectors();
         ActionsGardenPanel.Instance.SetActionsTilePanelActive(false);

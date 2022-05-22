@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moistureMask: {fileID: 6608552949764310732}
   _plantSprite: {fileID: 1729590334676230261}
+  _selectMask: {fileID: 3536297906967498554}
   nameOfPlant: 
   soilMoisture: 0
   soilDrainage: 0
@@ -318,7 +319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5655204535633165770
 Transform:
   m_ObjectHideFlags: 0
@@ -341,7 +342,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4152814013897912871}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
