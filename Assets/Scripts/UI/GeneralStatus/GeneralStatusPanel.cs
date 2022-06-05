@@ -8,7 +8,8 @@ public class GeneralStatusPanel : MonoBehaviour
     [SerializeField] TextMeshProUGUI _dateText;
     [SerializeField] TextMeshProUGUI _tempText;
     [SerializeField] TextMeshProUGUI _humidText;
- 
+    [SerializeField] TextMeshProUGUI _moneyText;
+
     private void Start()
     {
         UpdateStatusPanel();
@@ -18,6 +19,7 @@ public class GeneralStatusPanel : MonoBehaviour
     private void OnEnable()
     {
         Calendar.Instance?.SubscribeToGameTickEvents(UpdateStatusPanel);
+        UpdateMoneyText();
     }
 
     private void OnDisable()
@@ -44,5 +46,9 @@ public class GeneralStatusPanel : MonoBehaviour
         _humidText.color = Color.black + (Color.white * (1 - Weather.Instance.currentHumidity));
         _humidText.text = (Weather.Instance.currentHumidity * 100.0f).ToString("F0") + " %";
     }
-    
+
+    public void UpdateMoneyText()
+    {
+        _moneyText.text = string.Format("{0:C2}", Money.Instance.Balance);
+    }
 }
