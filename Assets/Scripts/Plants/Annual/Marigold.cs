@@ -6,6 +6,8 @@ using UnityEngine.U2D;
 
 public class Marigold : Annual
 {
+    public override int cost => 1;
+
     public override int daysToGerminate => 1;
 
     public override float minimumTemperatureToGerminate => 0;

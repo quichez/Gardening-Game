@@ -6,6 +6,8 @@ using UnityEngine.U2D;
 
 public class TestPerennialPlant : Plant
 {
+    public override int cost => 10;
+
     public override string plantName => "Test Perennial";
 
     public override string description => "Test Perennial Plant";

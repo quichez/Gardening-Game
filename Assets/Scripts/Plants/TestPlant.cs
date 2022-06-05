@@ -13,6 +13,7 @@ public class TestPlant : Annual
 
     public override string description => "New Test Plant";
 
+    public override int cost => 10;
     public override int daysToGerminate => 7;
 
     public override float minimumTemperatureToGerminate => 0.0f;

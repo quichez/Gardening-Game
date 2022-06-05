@@ -71,6 +71,7 @@ public class GardenTile : MonoBehaviour
         this.plant = plant;        
         nameOfPlant = plant.plantName;
         _plantSprite.sprite = plant.sprite;
+        Money.Instance.RemoveFromBalance(plant.cost);
         InspectorGarden.Instance.SetActiveInspectorPlant();
     }
 

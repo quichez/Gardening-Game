@@ -14,6 +14,7 @@ namespace GardeningGame
         {
             public abstract string plantName { get; }
             public abstract string description { get; }
+            public abstract int cost { get; }
             public int age { get; private set; }
             public Sprite sprite { get; private set; }
             public abstract SpriteAtlas atlas { get; }

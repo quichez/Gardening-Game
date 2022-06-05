@@ -5,7 +5,9 @@ using GardeningGame.Plants;
 using UnityEngine.U2D;
 
 public class Rose : Plant
-{    public int lifeExpectancy => 365 * 50;
+{
+    public override int cost => 10;
+    public int lifeExpectancy => 365 * 50;
 
     public float awakeTemperature => 40.0f;
 
