@@ -243,6 +243,31 @@ namespace GardeningGame
             public abstract void ClearInspector();
         }
     }
+
+    namespace Items
+    {
+        public interface IStackable
+        {
+            int quantity { get; }
+            void AddToStack()
+            {
+
+            }
+        }
+
+        public interface IQuality
+        {
+            int quality { get; }
+        }
+
+        public interface IQualityDegrade
+        {
+            float timeToDegrade { get; }
+            float degradeTimer { get; }
+
+            public void AddToDegradeTimer();
+        }
+    }
 }
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
