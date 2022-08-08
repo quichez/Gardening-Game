@@ -29,4 +29,21 @@ public class Inventory : MonoBehaviour
             }
         }
     }
+
+    public string InventoryToString()
+    {
+        var output = new System.Text.StringBuilder();
+        foreach (Item item in items)
+        {
+            string itemName = item.name;
+            if (item is IStackable stack)
+                itemName = stack.quantity.ToString() + "   " + itemName;
+            if (item is IQuality quality)
+                itemName += "{ " + quality.ToString() + " }";
+            
+            output.AppendLine(itemName);
+        }
+
+        return output.ToString();
+    }
 }

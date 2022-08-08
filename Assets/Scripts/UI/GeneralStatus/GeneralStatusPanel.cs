@@ -19,7 +19,6 @@ public class GeneralStatusPanel : MonoBehaviour
     private void OnEnable()
     {
         Calendar.Instance?.SubscribeToGameTickEvents(UpdateStatusPanel);
-        UpdateMoneyText();
     }
 
     private void OnDisable()

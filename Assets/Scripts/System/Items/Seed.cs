@@ -6,6 +6,7 @@ using GardeningGame.Items;
 public abstract class Seed : Item, IStackable, IQuality, IQualityDegrade
 {
     public int quantity { get; private set; }
+    public abstract int maxStack {get;}
 
     public int quality { get { return _quality; } private set { _quality = Mathf.Clamp(value, 0, 5); } }
     private int _quality;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Item
 {
-    private readonly string name;
+    public readonly string name;
 
     protected Item(string name)
     {

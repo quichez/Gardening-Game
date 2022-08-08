@@ -52,6 +52,11 @@ namespace GardeningGame
             }
 
             public virtual string StageToString() => "base";
+
+            public virtual void OnHarvest()
+            {
+                Debug.Log("Harvested!");
+            }
         }
 
         public static class PlantFactory
@@ -249,6 +254,7 @@ namespace GardeningGame
         public interface IStackable
         {
             int quantity { get; }
+            int maxStack { get; }
             void AddToStack()
             {
 
