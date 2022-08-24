@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item
+public abstract class Item
 {
-    public readonly string name;
+    public abstract string name { get; }
 
-    protected Item(string name)
+    protected Item()
     {
-        this.name = name;
+        
     }
 }

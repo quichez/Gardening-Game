@@ -74,4 +74,10 @@ public class Marigold : Annual
     {
         return "Flower";
     }
+
+    public override void OnHarvest()
+    {
+        if(IsMature)
+            Inventory.Instance.AddItem(new MarigoldSeed(2));
+    }
 }

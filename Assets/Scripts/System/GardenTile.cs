@@ -128,6 +128,8 @@ public class GardenTile : MonoBehaviour
         soilTexture += 0.1f;
         soilDrainage += 0.2f;
 
+        plant.OnHarvest();
+
         plant = null;
         nameOfPlant = null;
         _plantSprite.sprite = null;

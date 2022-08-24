@@ -255,10 +255,8 @@ namespace GardeningGame
         {
             int quantity { get; }
             int maxStack { get; }
-            void AddToStack()
-            {
-
-            }
+            bool IsFull => quantity == maxStack;
+            void AddToStack(int amount);
         }
 
         public interface IQuality
