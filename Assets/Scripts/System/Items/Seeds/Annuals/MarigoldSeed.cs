@@ -8,7 +8,7 @@ public class MarigoldSeed : Seed
 
     public override string name => "Marigold Seed";
 
-    public MarigoldSeed(int quantity) : base(quantity)
+    public MarigoldSeed(int quantity = 0) : base(quantity)
     {
 
     }

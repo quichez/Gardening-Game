@@ -7,6 +7,7 @@ namespace GardeningGame.Plants
 {
     public interface IGrowFromSeed
     {
+        Seed seedType { get; }
         int daysToGerminate { get; }
         float minimumTemperatureToGerminate { get; }
         float moistureRequiredForGermination { get; }

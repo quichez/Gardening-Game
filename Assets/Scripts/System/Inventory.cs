@@ -41,9 +41,29 @@ public class Inventory : Singleton<Inventory>
         }
     }
 
-    public bool RemoveItem(Item item)
+    public bool RemoveItem(Item item, int amount = 0)
     {
+        var sameItem = items.FindLast(x => x.GetType() == item.GetType());
+        if (sameItem != null)
+        {
+            switch (item)
+            {
+                case IStackable stackable:
+                    if (amount == 0) throw new System.ArgumentException("You can't delete zero items!");                
+                    if(!(sameItem as IStackable).RemoveFromStack(amount))
+                    {
+                        items.Remove(sameItem);
+                    }
+                    invPanel?.UpdateText(InventoryToString());
+                    break;
+                default:
+                    items.Remove(sameItem);
+                    invPanel?.UpdateText(InventoryToString());
+                    break;
 
+            }
+            return true;
+        }
         return false;
     }
 

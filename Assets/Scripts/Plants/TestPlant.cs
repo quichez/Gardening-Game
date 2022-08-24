@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using GardeningGame.Plants;
 using UnityEngine.U2D;
+using System;
 
 public class TestPlant : Annual
 {
     public TestPlant() { }
     public TestPlant(GardenTile gardenTile) : base(gardenTile) { }
 
+    public override Seed seedType => throw new NotImplementedException();
     public override string plantName => "Test Plant";
 
     public override string description => "New Test Plant";

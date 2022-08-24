@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using GardeningGame.Plants;
 using UnityEngine.U2D;
+using System;
 
 public class Marigold : Annual
 {
+    public override Seed seedType => new MarigoldSeed(2);
+
     public override int cost => 1;
 
     public override int daysToGerminate => 1;

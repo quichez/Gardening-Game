@@ -71,7 +71,22 @@ public class GardenTile : MonoBehaviour
         this.plant = plant;        
         nameOfPlant = plant.plantName;
         _plantSprite.sprite = plant.sprite;
-        Money.Instance.RemoveFromBalance(plant.cost);
+        
+        switch (plant)
+        {
+            case IGrowFromSeed seed:
+                if (Inventory.Instance.RemoveItem(seed.seedType,seed.seedType.quantity))
+                {
+                    break;
+                }
+                else
+                {
+                    Money.Instance.RemoveFromBalance(plant.cost);
+                    break;
+                }
+            default:
+                break;
+        }
         InspectorGarden.Instance.SetActiveInspectorPlant();
     }
 
