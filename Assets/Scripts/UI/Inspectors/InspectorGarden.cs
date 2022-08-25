@@ -3,13 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InspectorGarden : Singleton<InspectorGarden>
+public class InspectorGarden : Inspector<InspectorGarden>
 {
-    [SerializeField] InspectorSoil _inspectorSoil;
+    [SerializeField] InfoPanelSoil _inspectorSoil;
     [SerializeField] InspectorPlant _inspectorPlant;
-    internal void ActivateInspectors()
+
+    public override void ActivateInspectors()
+    {        
+        _inspectorSoil.gameObject.SetActive(Garden.Instance.selectedGardenTile);
+        _inspectorPlant.gameObject.SetActive(Garden.Instance.IsSelectedTilePlanted);
+    }
+
+    public void SetActiveInspectorPlant(bool active = true)
     {
-        _inspectorSoil.gameObject.SetActive(true);
-        _inspectorPlant.gameObject.SetActive(Garden.Instance.selectedGardenTile.IsSoilPlanted);
+        _inspectorPlant.gameObject.SetActive(active);
     }
 }

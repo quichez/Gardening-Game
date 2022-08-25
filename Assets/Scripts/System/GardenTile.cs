@@ -6,15 +6,16 @@ using GardeningGame.Plants;
 
 public class GardenTile : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer _moistureMask;
-    [SerializeField] SpriteRenderer _plantSprite;
+    [SerializeField] SpriteRenderer _moistureMask, _plantSprite, _selectMask;
+   
     public Plant plant;
     public string nameOfPlant;
     public bool IsSoilPlanted => plant != null;
 
+    #region Soil Quality
     [Header("Soil Quality")]
     [Tooltip("Current soil moisture.")]
-    [Range(0.0f,2.0f)] public float soilMoisture = 0.0f;
+    [Range(-1.0f,2.0f)] public float soilMoisture = 0.0f;
 
     [Tooltip("Cultivating the soil keeps it young. Measured in days.")]
     public int soilAge { get; private set; }
@@ -27,17 +28,17 @@ public class GardenTile : MonoBehaviour
 
     [Tooltip("Some plants like more alkaline soils, others more acidic. Measured in pH")]
     [SerializeField] float soilAcidity;
-        
-        
+   
     // These depend on GardenSettings
-    float soilMoistureMinimum => -1.0f + 1 * Weather.Instance.currentHumidity;
+    float soilMoistureMinimum => -0.3f + 1 * Weather.Instance.currentHumidity;
     float soilMoistureMaximum = 2.0f;
+    #endregion
 
-    [Tooltip("Nutrients")]
     #region Expand Nutrients
-    public float nitrogen { get; private set; }
-    public float phosphorus { get; private set; }
-    public float potassium { get; private set; }
+    [Tooltip("Nutrients")]
+    public float nitrogen { get; private set; } = 0.1f;
+    public float phosphorus { get; private set; } = 0.2f;
+    public float potassium { get; private set; } = 0.3f;
 
     public float calcium { get; private set; }
     public float sulfur { get; private set; }
@@ -70,6 +71,23 @@ public class GardenTile : MonoBehaviour
         this.plant = plant;        
         nameOfPlant = plant.plantName;
         _plantSprite.sprite = plant.sprite;
+        
+        switch (plant)
+        {
+            case IGrowFromSeed seed:
+                if (Inventory.Instance.RemoveItem(seed.seedType,seed.seedType.quantity))
+                {
+                    break;
+                }
+                else
+                {
+                    Money.Instance.RemoveFromBalance(plant.cost);
+                    break;
+                }
+            default:
+                break;
+        }
+        InspectorGarden.Instance.SetActiveInspectorPlant();
     }
 
     private void DailyMoistureLoss()
@@ -101,15 +119,51 @@ public class GardenTile : MonoBehaviour
     private void DailyPlantCheck()
     {
         if (plant == null) return;
+        plant.DailyEvent();
+        Debug.Log(plant.StageToString());
+        Debug.Log((plant as Annual).IsGerminated);
+        Debug.Log(plant.sprite);
         plant.CheckSoilConditions(this);
-        if (plant.IsDead) _plantSprite.color = Color.green/2.0f + (Color.blue + Color.red)/3f;
+        plant.CheckWeatherConditions();    
         
+        _plantSprite.sprite = plant.GetSprite();
     }
+
+    public void WaterGardenTile()
+    {
+        soilMoisture += Mathf.Max(0,(2.0f - soilMoisture)) * 0.2f;
+        SetMoistureMaskAlpha();
+    }
+
+    public void ClearGardenTile()
+    {
+        InspectorGarden.Instance.SetActiveInspectorPlant(false);
+
+        soilMoisture = 0.3f;
+        soilTexture += 0.1f;
+        soilDrainage += 0.2f;
+
+        plant.OnHarvest();
+
+        plant = null;
+        nameOfPlant = null;
+        _plantSprite.sprite = null;
+
+    }
+
+    public void TillSoil()
+    {
+        soilAge = 0;
+        soilTexture += 0.2f;
+        soilDrainage += 0.3f;
+    } 
 
     private void OnMouseUpAsButton()
     {
-        Garden.Instance.SetSelectedGardenTile(this);
-    }    
+        Garden.Instance.SetSelectedGardenTile(this);        
+    }
+
+    public void SetSelectMaskActive(bool active = true) => _selectMask.gameObject.SetActive(active);
 }
 
 

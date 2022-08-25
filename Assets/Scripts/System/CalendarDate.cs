@@ -10,6 +10,7 @@ public class CalendarDate : ScriptableObject
 
     public Action actionOnGameTickAdvance;
     public Action actionOnCalendarDayAdvance;
+    public bool IsTestMode = false;
 
     public string GetDate(int format = 0) => format switch
     {
@@ -23,6 +24,12 @@ public class CalendarDate : ScriptableObject
     public void AdvanceTime() => actionOnGameTickAdvance?.Invoke();
     public void AdvanceCalendar()
     {
+        if (IsTestMode)
+        {
+            actionOnCalendarDayAdvance?.Invoke();
+            return;
+        }
+
         if (day + 1 > 30)
         {
             if (month + 1 > 12)

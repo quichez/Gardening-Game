@@ -18,6 +18,9 @@ public class Weather : Singleton<Weather>
         Calendar.Instance.SubscribeToDailyEvents(ChanceOfWeatherPhenomenon);
         Calendar.Instance.SubscribeToGameTickEvents(SetCurrentTemperature);
         Calendar.Instance.SubscribeToGameTickEvents(SetCurrentHumidity);
+        ChanceOfWeatherPhenomenon();
+        SetCurrentTemperature();
+        SetCurrentHumidity();
     }
 
     public void ChanceOfWeatherPhenomenon()
