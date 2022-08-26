@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 // IGrow - the interfaces for initial plant growth
 namespace GardeningGame.Plants
 {
     public interface IGrowFromSeed
     {
-        Seed seedType { get; }
-        int daysToGerminate { get; }
+        bool IsSeed { get; }
+        int seedsToPlant { get; }
+        int seedsOnHarvest { get; }
+        /*int daysToGerminate { get; }
         float minimumTemperatureToGerminate { get; }
         float moistureRequiredForGermination { get; }
         int daysAtGerminationConditions { get; }
@@ -19,20 +17,27 @@ namespace GardeningGame.Plants
         int daysAsSeedling { get; }
         bool HasFirstLeaves => daysAsSeedling >= daysToFirstLeaves;
         bool CountNewDayTowardsFirstLeaves();
-
+        */
     }
 
-    public interface IGrowFromRhizome
+    public  interface IGrowFromCutting
+    {
+        bool IsCutting { get; }
+        bool HasRoots { get; }
+    }
+
+    /*public interface IGrowFromRhizome
     {
         int IsRhizomeDormant { get; }
         float tempReqForRhizomeAwake { get; }
         int daysReqForRhizomeAwake { get; }
-    }
+    }*/
 
-    public interface IGrowFromSpore
+    /*public interface IGrowFromSpore
     {
+        bool IsSpore { get; }
         int daysToSproutFromSpore { get; }
         bool IsSporeSprouted { get; }
-    }
+    }*/
 
 }

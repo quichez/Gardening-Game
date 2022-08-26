@@ -8,57 +8,7 @@ using System.Linq;
 namespace GardeningGame
 {
     namespace Plants
-    {
-        
-        public abstract class Plant : IDailyEvent
-        {
-            public abstract string plantName { get; }
-            public abstract string description { get; }
-            public abstract int cost { get; }
-            public int age { get; private set; }
-            public Sprite sprite { get; private set; }
-            public abstract SpriteAtlas atlas { get; }
-            public int health { get; private set; } = 100;
-            public bool IsDead => health == 0;
-            public readonly GardenTile tile;
-
-            public Plant() 
-            {
-                tile = Garden.Instance.selectedGardenTile;
-            }
-            public Plant(GardenTile gardenTile) { tile = gardenTile; }            
-
-            public void TakeDamage(int amt = 1)
-            {
-                health = Mathf.Max(0, health - amt);                
-            }
-
-            public abstract void CheckSoilConditions(GardenTile gardenTile);
-
-            public abstract void CheckWeatherConditions();
-
-            public override string ToString() => plantName;
-
-            public abstract string SubTypeToString();
-
-            public abstract Sprite GetSprite();
-
-            public virtual void DailyEvent()
-            {
-                CheckSoilConditions(tile);
-                CheckWeatherConditions();
-                age++;                
-                //Debug.Log(sprite.name);
-            }
-
-            public virtual string StageToString() => "base";
-
-            public virtual void OnHarvest()
-            {
-                Debug.Log("Harvested!");
-            }
-        }
-
+    {               
         public static class PlantFactory
         {
             private static Dictionary<string, Type> _plantByName;
@@ -107,7 +57,7 @@ namespace GardeningGame
             }
         }
 
-        public abstract class Annual : Plant, IGrowFromSeed
+        public abstract class Annual : Plant
         {
             public Annual() { }
             public Annual(GardenTile gardenTile) : base(gardenTile) {}
@@ -174,22 +124,31 @@ namespace GardeningGame
             }
         }
 
-        public interface IFlower
+        public interface IAnnual
         {
 
         }
 
-        public interface IFruit : IFlower
+        public interface IFlower
         {
+            bool IsBloomed { get; }
+        }
 
+        public interface IFruit
+        {
+            bool IsBlossomed { get; }
+            bool IsFruitSet { get; }
         }
 
         public interface IHarvestable
         {
-
+            void OnHarvest()
+            {
+                Debug.Log("Harvested!");
+            }
         }
 
-        public interface IHarvestPlant : IHarvestable
+        /*public interface IHarvestPlant : IHarvestable
         {
 
         }
@@ -222,7 +181,7 @@ namespace GardeningGame
         public interface IOtherPollinate : IPollinate
         {
 
-        }
+        }*/
     }
 
     namespace NutrientInfo

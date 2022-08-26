@@ -5,72 +5,43 @@ using GardeningGame.Plants;
 using UnityEngine.U2D;
 using System;
 
-public class Marigold : Annual
+public class Marigold : Plant, IPlantable, IHarvestable, IGrowFromSeed
 {
-    public override Seed seedType => new MarigoldSeed(2);
-
-    public override int cost => 1;
-
-    public override int daysToGerminate => 1;
-
-    public override float minimumTemperatureToGerminate => 0;
-
-    public override float moistureRequiredForGermination => 0.0f;
-
-    public override float moistureToleranceForGermination => 20f;
-
-    public override int daysToFirstLeaves => 1;
-
-    public override int daysToMaturity => 1;
-
     public override string plantName => "Marigold";
 
-    public override string description => "One of the best companion plants for vegetable gardens.";    
+    public override string description => "Warm colors, symbolize death, great for tomatoes!";
 
     public override SpriteAtlas atlas => Resources.Load<SpriteAtlas>("SpriteAtlases/Annuals/Marigold");
 
+    public int seedsToPlant => 3;
+
+    public int seedsOnHarvest => 10;
+
+    public bool IsSeed => !IsPlanted;
+
     public override void CheckSoilConditions(GardenTile gardenTile)
     {
-        if(IsGerminated && !HasFirstLeaves)
-        {
-            if (gardenTile.soilMoisture < 0.5f  || gardenTile.soilMoisture > 1.1f) TakeDamage(10);
-        }
-        if (HasFirstLeaves)
-        {
-            if (gardenTile.nitrogen < 0.1) TakeDamage(1);
-            if (gardenTile.phosphorus < 0.1) TakeDamage(1);
-            if (gardenTile.potassium < 0.1) TakeDamage(2);
-            if (gardenTile.soilMoisture > 1.1f || gardenTile.soilMoisture < 0.2f) TakeDamage(1);
-        }
+        throw new NotImplementedException();
     }
 
     public override void CheckWeatherConditions()
     {
-        if(!HasFirstLeaves)
-        {
-            if (Weather.Instance.currentTemperature <= 32) TakeDamage(20);            
-        }
+        throw new NotImplementedException();
     }
 
     public override Sprite GetSprite()
-    {       
-        if (IsDead)
-        {
-            return IsGerminated ? HasFirstLeaves ? IsMature ? 
-                atlas.GetSprite("marigold_mature_dead") :
-                atlas.GetSprite("marigold_growing_dead") :
-                atlas.GetSprite("marigold_seedling_dead") :
-                null;
-        }
-        else
-        {
-            return IsGerminated ? HasFirstLeaves ? IsMature ? 
-                atlas.GetSprite("marigold_mature") :
-                atlas.GetSprite("marigold_growing") :
-                atlas.GetSprite("marigold_seedling") :
-                null;
-        }
-        
+    {
+        throw new NotImplementedException();
+    }
+
+    public void OnPlant()
+    {
+        Debug.Log(string.Format($"I planted {0} seeds", seedsToPlant));
+    }
+
+    public override void OnHarvest()
+    {
+        base.OnHarvest();
     }
 
     public override string SubTypeToString()
@@ -78,9 +49,8 @@ public class Marigold : Annual
         return "Flower";
     }
 
-    public override void OnHarvest()
+    public override string StageToString()
     {
-        if(IsMature)
-            Inventory.Instance.AddItem(new MarigoldSeed(2));
+        return base.StageToString();
     }
 }

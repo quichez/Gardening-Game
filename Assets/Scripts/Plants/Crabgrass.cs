@@ -6,8 +6,6 @@ using UnityEngine.U2D;
 
 public class Crabgrass : Plant
 {
-    public override int cost => 10;
-
     public override string plantName => "Crabgrass";
 
     public override string description => "Not that kind.";
