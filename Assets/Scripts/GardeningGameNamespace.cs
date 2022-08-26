@@ -1,14 +1,13 @@
-using UnityEngine;
-using UnityEngine.U2D;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
+using UnityEngine;
 
 namespace GardeningGame
 {
     namespace Plants
-    {               
+    {
         public static class PlantFactory
         {
             private static Dictionary<string, Type> _plantByName;
@@ -122,9 +121,11 @@ namespace GardeningGame
             {
                 return IsDead ? "Dead" : IsGerminated ? HasFirstLeaves ? IsMature ? "Mature" : "Growing" : "Seedling" : "Germinating";
             }
-        }
+        }        
 
-        public interface IAnnual
+        
+
+        public enum PerennialSeeds
         {
 
         }
@@ -140,13 +141,7 @@ namespace GardeningGame
             bool IsFruitSet { get; }
         }
 
-        public interface IHarvestable
-        {
-            void OnHarvest()
-            {
-                Debug.Log("Harvested!");
-            }
-        }
+        
 
         /*public interface IHarvestPlant : IHarvestable
         {
@@ -206,32 +201,14 @@ namespace GardeningGame
             public abstract void FillInspector();
             public abstract void ClearInspector();
         }
-    }
 
-    namespace Items
-    {
-        public interface IStackable
+        public abstract class Inspector<T> : Singleton<T> where T:MonoBehaviour
         {
-            int quantity { get; }
-            int maxStack { get; }
-            bool IsFull => quantity == maxStack;
-            void AddToStack(int amount);
-            bool RemoveFromStack(int amount);
-        }
+            public abstract void ActivateInspectors();
 
-        public interface IQuality
-        {
-            int quality { get; }
+            public void TogglePanel(MonoBehaviour panel) => panel.gameObject.SetActive(!panel.gameObject.activeSelf);
         }
-
-        public interface IQualityDegrade
-        {
-            float timeToDegrade { get; }
-            float degradeTimer { get; }
-
-            public void AddToDegradeTimer();
-        }
-    }
+    }    
 }
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
@@ -258,12 +235,6 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     }
 }
 
-public abstract class Inspector<T> : Singleton<T> where T:MonoBehaviour
-{
-    public abstract void ActivateInspectors();
-
-    public void TogglePanel(MonoBehaviour panel) => panel.gameObject.SetActive(!panel.gameObject.activeSelf);
-}
 public abstract class SingletonPersistent<T> : Singleton<T> where T : MonoBehaviour
 {
     protected override void Awake()

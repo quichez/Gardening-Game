@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using GardeningGame.Plants;
+using GardeningGame.Items;
+using System.Linq;
 
 public class GardenTile : MonoBehaviour
 {
@@ -71,8 +73,8 @@ public class GardenTile : MonoBehaviour
         this.plant = plant;        
         nameOfPlant = plant.plantName;
         _plantSprite.sprite = plant.sprite;
-        
-        // Plant seed or use money to buy
+
+        plant.OnPlant();
 
         InspectorGarden.Instance.SetActiveInspectorPlant();
     }
@@ -106,10 +108,7 @@ public class GardenTile : MonoBehaviour
     private void DailyPlantCheck()
     {
         if (plant == null) return;
-        plant.DailyEvent();
-        Debug.Log(plant.StageToString());
-        Debug.Log((plant as Annual).IsGerminated);
-        Debug.Log(plant.sprite);
+        plant.DailyEvent();       
         plant.CheckSoilConditions(this);
         plant.CheckWeatherConditions();    
         
@@ -130,7 +129,7 @@ public class GardenTile : MonoBehaviour
         soilTexture += 0.1f;
         soilDrainage += 0.2f;
 
-        plant.OnHarvest();
+        (plant as IHarvestable)?.OnHarvest();
 
         plant = null;
         nameOfPlant = null;

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using GardeningGame.Inspectors;
 public class ActionsGardenPanel : Inspector<ActionsGardenPanel>
 {
     [SerializeField] ActionsTilePanel _actionsTilePanel;

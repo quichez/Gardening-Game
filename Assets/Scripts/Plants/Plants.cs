@@ -16,7 +16,7 @@ namespace GardeningGame.Plants
         public bool IsDead => health == 0;
         public readonly GardenTile tile;
 
-        public bool IsPlanted { get; private set; }
+        public bool IsPlanted { get; private set; } = false;
         public Plant()
         {
             tile = Garden.Instance.selectedGardenTile;
@@ -35,7 +35,10 @@ namespace GardeningGame.Plants
 
         public override string ToString() => plantName;
 
-        public abstract string SubTypeToString();
+        public virtual string SubTypeToString()
+        {
+            return "Subtypes not defined.";
+        }
 
         public abstract Sprite GetSprite();
 
@@ -47,12 +50,29 @@ namespace GardeningGame.Plants
             //Debug.Log(sprite.name);
         }
 
-        public virtual string StageToString() => "base";
-
-        public virtual void OnHarvest()
+        public virtual void OnPlant()
         {
-            Debug.Log("Harvested!");
+            Debug.Log("I was planted!");
         }
+
+        public virtual string StageToString() => "base";
+    }
+
+    public interface IAnnual
+    {
+        AnnualSeeds seedType { get; }
+        System.Type seedType1 { get; }
+        int seedsToPlant { get; }
+    }
+
+    public interface IPerennial
+    {
+        PerennialSeeds seedType { get; }
+    }
+
+    public interface IHarvestable
+    {
+        void OnHarvest();
     }
 
 }

@@ -45,6 +45,11 @@ public class Crabgrass : Plant
         throw new System.NotImplementedException();
     }
 
+    public override void OnPlant()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public Crabgrass() { }
     public Crabgrass(GardenTile gardenTile) : base(gardenTile) { }
 }

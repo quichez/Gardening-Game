@@ -8,7 +8,7 @@ public class Money : Singleton<Money>
 {
     public int Balance { get; private set; } = 1000;
     public UnityEvent OnBalanceChange;
-
+    public bool IsBroke => Balance < 0;
     protected override void Awake()
     {
         base.Awake();

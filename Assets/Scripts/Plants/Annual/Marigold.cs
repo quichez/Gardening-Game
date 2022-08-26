@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using GardeningGame.Items;
 using GardeningGame.Plants;
-using UnityEngine.U2D;
 using System;
+using UnityEngine;
+using UnityEngine.U2D;
 
 public class Marigold : Plant, IPlantable, IHarvestable, IGrowFromSeed
 {
@@ -18,6 +17,8 @@ public class Marigold : Plant, IPlantable, IHarvestable, IGrowFromSeed
     public int seedsOnHarvest => 10;
 
     public bool IsSeed => !IsPlanted;
+
+    public int maxStack => 100;
 
     public override void CheckSoilConditions(GardenTile gardenTile)
     {
@@ -34,14 +35,15 @@ public class Marigold : Plant, IPlantable, IHarvestable, IGrowFromSeed
         throw new NotImplementedException();
     }
 
-    public void OnPlant()
+    public override void OnPlant()
     {
         Debug.Log(string.Format($"I planted {0} seeds", seedsToPlant));
     }
 
-    public override void OnHarvest()
+    public void OnHarvest()
     {
-        base.OnHarvest();
+        //Item output = new();
+
     }
 
     public override string SubTypeToString()
