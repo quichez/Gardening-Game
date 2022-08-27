@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class Marigold : Plant, IPlantable, IHarvestable, IGrowFromSeed
+public class Marigold : Plant, IHarvestable, IAnnual
 {
     public override string plantName => "Marigold";
 
@@ -13,12 +13,6 @@ public class Marigold : Plant, IPlantable, IHarvestable, IGrowFromSeed
     public override SpriteAtlas atlas => Resources.Load<SpriteAtlas>("SpriteAtlases/Annuals/Marigold");
 
     public int seedsToPlant => 3;
-
-    public int seedsOnHarvest => 10;
-
-    public bool IsSeed => !IsPlanted;
-
-    public int maxStack => 100;
 
     public override void CheckSoilConditions(GardenTile gardenTile)
     {

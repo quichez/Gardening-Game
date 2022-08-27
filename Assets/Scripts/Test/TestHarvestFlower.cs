@@ -12,10 +12,6 @@ public class TestHarvestFlower : Plant, IHarvestable, IAnnual
 
     public override SpriteAtlas atlas => throw new NotImplementedException();
 
-    public AnnualSeeds seedType => AnnualSeeds.TestHarvestFlower;
-
-    public Type seedType1 => typeof(TestHarvestFlowerSeed);
-
     public int seedsToPlant => 3;
 
     public override void CheckSoilConditions(GardenTile gardenTile)

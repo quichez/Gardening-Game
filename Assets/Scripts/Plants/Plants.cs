@@ -60,8 +60,6 @@ namespace GardeningGame.Plants
 
     public interface IAnnual
     {
-        AnnualSeeds seedType { get; }
-        System.Type seedType1 { get; }
         int seedsToPlant { get; }
     }
 
