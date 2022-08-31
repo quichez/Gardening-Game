@@ -6,7 +6,7 @@ SpriteAtlas:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Marigold
+  m_Name: Sunflower
   m_EditorData:
     serializedVersion: 2
     textureSettings:
@@ -15,7 +15,7 @@ SpriteAtlas:
       compressionQuality: 50
       maxTextureSize: 2048
       textureCompression: 0
-      filterMode: 1
+      filterMode: 0
       generateMipMaps: 0
       readable: 0
       crunchedCompression: 0
@@ -23,10 +23,10 @@ SpriteAtlas:
     platformSettings:
     - serializedVersion: 3
       m_BuildTarget: DefaultTexturePlatform
-      m_MaxTextureSize: 256
+      m_MaxTextureSize: 2048
       m_ResizeAlgorithm: 0
       m_TextureFormat: -1
-      m_TextureCompression: 2
+      m_TextureCompression: 0
       m_CompressionQuality: 50
       m_CrunchedCompression: 0
       m_AllowsAlphaSplitting: 0
@@ -35,7 +35,7 @@ SpriteAtlas:
       m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
-      padding: 4
+      padding: 2
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
@@ -44,25 +44,25 @@ SpriteAtlas:
     secondaryTextureSettings: {}
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: 7cd11489c3eff944798da44bb9e2358c, type: 3}
+    - {fileID: 102900000, guid: 342dfdd53d6ff6e459469f616f1fd07e, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 21300000, guid: f19a8d34062eed44196351024dbd5f87, type: 3}
-  - {fileID: 21300000, guid: e82280c5690047d419532476edde4a24, type: 3}
-  - {fileID: 21300000, guid: e8f1f92ba7c8f0a4fbe7747b64b86ae5, type: 3}
-  - {fileID: 21300000, guid: a9bfec1e495353640840160bfc7b3cee, type: 3}
-  - {fileID: 21300000, guid: a0b80b7f64ba29e42b37cb683ec0b021, type: 3}
-  - {fileID: 21300000, guid: a862d99f8d78ac242ac104caa25d20fb, type: 3}
+  - {fileID: 21300000, guid: 77e1cda0682ba9649a69d06701e86223, type: 3}
+  - {fileID: 21300000, guid: 7f2421e7923a7a342b29ca7d3bc3003c, type: 3}
+  - {fileID: 21300000, guid: 615d0f4be362c6a46af55fc52f5e6ba3, type: 3}
+  - {fileID: 21300000, guid: 6b9a045b08362494cb30ba4d909e6cb9, type: 3}
+  - {fileID: 21300000, guid: b49a821c29c7109449370535019daa0c, type: 3}
+  - {fileID: 21300000, guid: 89ca204c9cab0b349879125234c997a6, type: 3}
   m_PackedSpriteNamesToIndex:
-  - marigold_mature
-  - marigold_growing_dead
-  - marigold_growing
-  - marigold_seedling
-  - marigold_mature_dead
-  - marigold_seedling_dead
+  - sunflower_growing
+  - sunflower_growing_dead
+  - sunflower_mature
+  - sunflower_mature_dead
+  - sunflower_seedling
+  - sunflower_seedling_dead
   m_RenderDataMap: {}
-  m_Tag: Marigold
+  m_Tag: Sunflower
   m_IsVariant: 0

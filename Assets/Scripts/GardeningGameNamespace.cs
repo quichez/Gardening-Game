@@ -58,8 +58,6 @@ namespace GardeningGame
 
         public abstract class Annual : Plant
         {
-            public Annual() { }
-            public Annual(GardenTile gardenTile) : base(gardenTile) {}
             public abstract Seed seedType { get; }
             public abstract int daysToGerminate { get; }
             public abstract float minimumTemperatureToGerminate { get; }
@@ -76,20 +74,7 @@ namespace GardeningGame
 
             public bool IsGerminated => daysAtGerminationConditions >= daysToGerminate;
             public bool HasFirstLeaves => daysAsSeedling >= daysToFirstLeaves;
-            public bool IsMature => daysOfVegetativeGrowth >= daysToMaturity;
-
-            public override void DailyEvent()
-            {
-                base.DailyEvent();
-                
-                if (!CountNewDayTowardsGermination())
-                {
-                    if (!CountNewDayTowardsFirstLeaves())
-                    {
-                        CountNewDayTowardsMaturity();
-                    }
-                }
-            }
+            public bool IsMature => daysOfVegetativeGrowth >= daysToMaturity;          
 
             public virtual bool CountNewDayTowardsGermination()
             {

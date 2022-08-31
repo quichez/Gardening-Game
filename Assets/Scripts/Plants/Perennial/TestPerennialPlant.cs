@@ -4,7 +4,7 @@ using UnityEngine;
 using GardeningGame.Plants;
 using UnityEngine.U2D;
 
-public class TestPerennialPlant : Plant
+public class TestPerennialPlant { }/* : Plant
 {
     public override string plantName => "Test Perennial";
 
@@ -49,4 +49,4 @@ public class TestPerennialPlant : Plant
     {
         throw new System.NotImplementedException();
     }
-}
+}*/

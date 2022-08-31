@@ -4,7 +4,7 @@ using UnityEngine;
 using GardeningGame.Plants;
 using UnityEngine.U2D;
 
-public class Crabgrass : Plant
+public class Crabgrass { /* : Plant
 {
     public override string plantName => "Crabgrass";
 
@@ -51,5 +51,5 @@ public class Crabgrass : Plant
     }
 
     public Crabgrass() { }
-    public Crabgrass(GardenTile gardenTile) : base(gardenTile) { }
+    public Crabgrass(GardenTile gardenTile) : base(gardenTile) { }*/
 }

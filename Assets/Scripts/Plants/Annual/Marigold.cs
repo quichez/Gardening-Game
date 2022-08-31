@@ -14,15 +14,7 @@ public class Marigold : Plant, IHarvestable, IAnnual
 
     public int seedsToPlant => 3;
 
-    public override void CheckSoilConditions(GardenTile gardenTile)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void CheckWeatherConditions()
-    {
-        throw new NotImplementedException();
-    }
+    public override FeederType feederType => FeederType.Light;
 
     public override Sprite GetSprite()
     {
@@ -31,13 +23,15 @@ public class Marigold : Plant, IHarvestable, IAnnual
 
     public override void OnPlant()
     {
-        Debug.Log(string.Format($"I planted {0} seeds", seedsToPlant));
+        if (!Inventory.Instance.RemoveItem(new MarigoldSeed(3)))
+        {
+            Money.Instance.RemoveFromBalance(2);
+        }
     }
 
     public void OnHarvest()
     {
-        //Item output = new();
-
+        Inventory.Instance.AddItem(new MarigoldSeed(5));
     }
 
     public override string SubTypeToString()
@@ -49,4 +43,21 @@ public class Marigold : Plant, IHarvestable, IAnnual
     {
         return base.StageToString();
     }
+
+    public override void OnDailyEvent()
+    {
+        throw new NotImplementedException();
+    }
 }
+
+public class MarigoldSeed : Seed
+{
+    public MarigoldSeed(int quantity) : base(quantity)
+    {
+    }
+
+    public override int maxStack => throw new NotImplementedException();
+
+    public override string ToString() => quantity > 1 ? "Marigold Seeds" : "Marigold Seed";
+}
+

@@ -5,6 +5,8 @@ using UnityEngine.U2D;
 
 namespace GardeningGame.Plants
 {
+    public enum FeederType { Heavy, Medium, Light}
+
     public abstract class Plant : IDailyEvent
     {
         public abstract string plantName { get; }
@@ -17,6 +19,8 @@ namespace GardeningGame.Plants
         public readonly GardenTile tile;
 
         public bool IsPlanted { get; private set; } = false;
+
+        public abstract FeederType feederType { get; }
         public Plant()
         {
             tile = Garden.Instance.selectedGardenTile;
@@ -29,10 +33,6 @@ namespace GardeningGame.Plants
             health = Mathf.Max(0, health - amt);
         }
 
-        public abstract void CheckSoilConditions(GardenTile gardenTile);
-
-        public abstract void CheckWeatherConditions();
-
         public override string ToString() => plantName;
 
         public virtual string SubTypeToString()
@@ -42,32 +42,39 @@ namespace GardeningGame.Plants
 
         public abstract Sprite GetSprite();
 
-        public virtual void DailyEvent()
+        public void DailyEvent()
         {
-            CheckSoilConditions(tile);
-            CheckWeatherConditions();
-            age++;
-            //Debug.Log(sprite.name);
+            if(!IsDead) age++;
+            OnDailyEvent();
         }
 
-        public virtual void OnPlant()
-        {
-            Debug.Log("I was planted!");
-        }
+        public abstract void OnDailyEvent();
+
+        public abstract void OnPlant();
 
         public virtual string StageToString() => "base";
     }
 
+    public interface ICheckSoil
+    {
+        void CheckSoilConditions(GardenTile gardenTile);
+    }
+    public interface ICheckWeather
+    {
+        void CheckWeatherConditions();
+    }
+    public interface IStageSimple 
+    { 
+    
+    }
     public interface IAnnual
     {
         int seedsToPlant { get; }
     }
-
     public interface IPerennial
     {
         PerennialSeeds seedType { get; }
     }
-
     public interface IHarvestable
     {
         void OnHarvest();

@@ -5,7 +5,7 @@ using GardeningGame.Plants;
 using UnityEngine.U2D;
 using System;
 
-public class TestPlant : Annual
+public class TestPlant { }/* : Annual
 {
     public TestPlant() { }
     public TestPlant(GardenTile gardenTile) : base(gardenTile) { }
@@ -61,4 +61,4 @@ public class TestPlant : Annual
     {
         return "testplant";
     }
-}
+}*/

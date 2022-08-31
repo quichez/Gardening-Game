@@ -4,29 +4,52 @@ using System;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class TestHarvestFlower : Plant, IHarvestable, IAnnual
+public class TestHarvestFlower : Plant, IHarvestable, IAnnual, ICheckSoil, ICheckWeather
 {
     public override string plantName => "Test Harvest Flower";
 
     public override string description => "Test flower";
 
-    public override SpriteAtlas atlas => throw new NotImplementedException();
+    public override SpriteAtlas atlas => Resources.Load<SpriteAtlas>("SpriteAtlases/Annuals/Marigold");
 
     public int seedsToPlant => 3;
 
-    public override void CheckSoilConditions(GardenTile gardenTile)
+    public override FeederType feederType => FeederType.Light;
+
+    public void CheckSoilConditions(GardenTile gardenTile)
     {
-        return;// throw new NotImplementedException();
+        if (gardenTile.nitrogen < 0.0f) TakeDamage(20);
     }
 
-    public override void CheckWeatherConditions()
+    public void CheckWeatherConditions()
     {
-        return;// throw new NotImplementedException();
+        if (Weather.Instance.currentTemperature < 5.0f) TakeDamage(20);
     }
 
     public override Sprite GetSprite()
     {
-        return null;// throw new NotImplementedException();
+        if (IsDead)
+        {
+            return age > 5 ? age > 10? age > 20 ?
+                atlas.GetSprite("marigold_mature_dead") :
+                atlas.GetSprite("marigold_growing_dead") :
+                atlas.GetSprite("marigold_seedling_dead") :
+                null;
+        }
+        else
+        {
+            return age > 5 ? age > 10 ? age > 20 ?
+                atlas.GetSprite("marigold_mature") :
+                atlas.GetSprite("marigold_growing") :
+                atlas.GetSprite("marigold_seedling") :
+                null;
+        }
+    }
+
+    public override void OnDailyEvent()
+    {
+        CheckSoilConditions(tile);
+        CheckWeatherConditions();
     }
 
     public void OnHarvest()

@@ -4,7 +4,7 @@ using UnityEngine;
 using GardeningGame.Plants;
 using UnityEngine.U2D;
 
-public class Rose : Plant
+public class Rose { }/* : Plant
 {
     public int lifeExpectancy => 365 * 50;
 
@@ -42,4 +42,4 @@ public class Rose : Plant
     {
         throw new System.NotImplementedException();
     }
-}
+}*/

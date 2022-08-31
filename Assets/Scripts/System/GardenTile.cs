@@ -109,9 +109,6 @@ public class GardenTile : MonoBehaviour
     {
         if (plant == null) return;
         plant.DailyEvent();       
-        plant.CheckSoilConditions(this);
-        plant.CheckWeatherConditions();    
-        
         _plantSprite.sprite = plant.GetSprite();
     }
 
